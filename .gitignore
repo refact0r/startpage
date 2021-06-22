@@ -1,3 +1,4 @@
 /node_modules/
 .web-extension-id
 .DS_Store
+/public/build/
