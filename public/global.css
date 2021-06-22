@@ -1,0 +1,222 @@
+* {
+    --bg-color: #192330;
+    --bg2-color: #1c2736;
+    --text-light-color: #dee5ed;
+    --text-color: #AFC0D5;
+    --text-dark-color: #587ca7;
+    --sun-color: hsl(40, 70%, 60%);
+    --moon-color: hsl(0, 0%, 70%);
+    --cloud-color: hsl(200, 30%, 80%);
+    --rain-color: hsl(190, 80%, 60%);
+    --snow-color: hsl(0, 0%, 90%);  
+}
+
+body {
+    height: 100vh;
+    width: 100%;
+    margin: 0;
+    background: var(--bg-color);
+    color: var(--text-color);
+    font-family: Cascadia Code;
+    font-size: 1.2rem;
+    font-weight: 200;
+}
+
+.weather-icon {
+    display: inline-block;
+    animation: weather-icon-move 5s ease-in-out infinite;
+}
+
+.sun { 
+    background: var(--sun-color); 
+    width: 2.4rem;
+    height: 2.4rem;
+    margin: -0.4rem 0 0 0.8rem;
+    vertical-align: top;
+	border-radius: 50%; 
+	box-shadow: rgba(255,255,0,0.1) 0 0 0 0.5rem;
+    animation: light 1s ease-in-out infinite alternate, weather-icon-move 5s ease-in-out infinite;
+}
+
+.moon { 
+    background: var(--moon-color); 
+    width: 2rem;
+    height: 2rem;
+    margin: -0.6rem 0 0 0.6rem;
+    vertical-align: top;
+	border-radius: 50%;
+    background: none;
+	box-shadow: var(--moon-color) 0.4rem 0.4rem 0 0.2rem;
+    animation: weather-icon-move 5s ease-in-out infinite;
+}
+
+.cloud {
+    background: var(--cloud-color);
+	border-radius: 2rem; 
+    width: 1.5rem;
+    height: 1.5rem;
+    margin: 0rem 2.4rem 0 0;
+    vertical-align: top;
+    box-shadow: 
+        var(--cloud-color) 0.7rem 0.4rem 0 0.2rem, 
+        var(--cloud-color) 1.7rem 0.9rem 0 -0.2rem, 
+        var(--cloud-color) 2.4rem 0.2rem 0 0.2rem,
+        var(--cloud-color) 1.8rem -0.6rem 0 0rem, 
+        var(--cloud-color) 0.8rem -0.6rem 0 -0.2rem;
+}
+
+.rain {
+    background: var(--cloud-color);
+    border-radius: 2rem; 
+    width: 1.5rem;
+    height: 1.5rem;
+    margin: -0.4rem 2rem 0 0;
+    vertical-align: top;
+    box-shadow: 
+        var(--cloud-color) 0.7rem 0.4rem 0 0.2rem, 
+        var(--cloud-color) 1.7rem 0.9rem 0 -0.2rem, 
+        var(--cloud-color) 2.4rem 0.2rem 0 0.2rem,
+        var(--cloud-color) 1.8rem -0.6rem 0 0rem, 
+        var(--cloud-color) 0.8rem -0.6rem 0 -0.2rem;
+    transform: scale(0.8);
+    animation: weather-icon-move-rain 5s ease-in-out infinite;
+}
+
+.rain:after {
+    content: "";
+    position: absolute;
+    border-radius: 10px;
+    background-color: transparent;
+    width: 0.2rem;
+    height: 0.8rem;
+    top: 2rem;
+    transform: rotate(30deg);
+    animation: rain 1s ease-in-out infinite;
+}
+
+.snow {
+    background: var(--cloud-color);
+    border-radius: 2rem; 
+    width: 1.5rem;
+    height: 1.5rem;
+    margin: -0.4rem 2rem 0 0;
+    vertical-align: top;
+    box-shadow: 
+        var(--cloud-color) 0.7rem 0.4rem 0 0.2rem, 
+        var(--cloud-color) 1.7rem 0.9rem 0 -0.2rem, 
+        var(--cloud-color) 2.4rem 0.2rem 0 0.2rem,
+        var(--cloud-color) 1.8rem -0.6rem 0 0rem, 
+        var(--cloud-color) 0.8rem -0.6rem 0 -0.2rem;
+    transform: scale(0.8);
+    animation: weather-icon-move-rain 5s ease-in-out infinite;
+}
+
+.snow:after {
+    content: "";
+    position: absolute;
+    border-radius: 10px;
+    background-color: transparent;
+    width: 0.2rem;
+    height: 0.2rem;
+    top: 2.4rem;
+    animation: snow 1s ease-in-out infinite;
+}
+
+@keyframes light {
+    from {
+        box-shadow: rgba(255,255,0,0.2) 0 0 0 0.5rem;
+    }
+    to {
+        box-shadow: rgba(255,255,0,0.2) 0 0 0 0.8rem;
+    }
+}
+
+@keyframes rain {
+    from {
+        opacity: 1;
+        box-shadow: 
+        var(--rain-color) 0.6rem 0rem,
+		var(--rain-color) 1.2rem -0.33rem, 
+		var(--rain-color) 1.8rem -0.66rem,
+		var(--rain-color) 2.4rem -0.99rem;  
+    }
+    to {
+        opacity: 0;
+        box-shadow: 
+        var(--rain-color) 0.6rem 0.66rem,
+        var(--rain-color) 1.2rem 0.33rem, 
+		var(--rain-color) 1.8rem -0rem, 
+		var(--rain-color) 2.4rem -0.33rem;
+    }
+}
+
+@keyframes snow {
+    from {
+        opacity: 1;
+        box-shadow: 
+        var(--snow-color) 1rem 0rem,
+		var(--snow-color) 1.6rem 0.2rem, 
+		var(--snow-color) 2.2rem 0rem,
+		var(--snow-color) 2.8rem 0.2rem;  
+    }
+    to {
+        opacity: 0;
+        box-shadow: 
+        var(--snow-color) 1rem 1rem,
+		var(--snow-color) 1.6rem 1.2rem, 
+		var(--snow-color) 2.2rem 1rem,
+		var(--snow-color) 2.8rem 1.2rem;  
+    }
+}
+
+@keyframes weather-icon-move {
+	50% { 
+        transform: translateY(0.5rem);
+    }
+}
+
+@keyframes weather-icon-move-rain {
+	50% { 
+        transform: translateY(0.5rem) scale(0.8);
+    }
+}
+
+@keyframes appear {
+    from {
+        transform: scale(0);
+    }
+    to {
+        transform: scale(1);
+    }
+}
+
+@keyframes time-appear {
+    from {
+        transform: translate(-50%, -50%) scale(0);
+    }
+    to {
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+@keyframes weather-appear {
+    0% {
+        opacity: 0;
+        transform: translateX(4rem);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes text-appear {
+    from {
+        opacity: 0;
+        transform: translateX(8rem);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
