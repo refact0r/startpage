@@ -85,7 +85,7 @@
 </script>
 
 <main>
-	<div id="box">
+	<div id="content">
 		<div id="image-container">
 			<img
 				id="image"
@@ -172,7 +172,10 @@
 			{/if}
 		</div>
 	</div>
-	<div id="version">v1.2.2</div>
+	<div id="corner">
+		<button id="settings-button">settings</button>
+		<a href="https://github.com/refact0r/startpage" id="version">v1.2.3</a>
+	</div>
 </main>
 
 <style>
@@ -183,7 +186,7 @@
 		height: 100%;
 		width: 100%;
 	}
-	#box {
+	#content {
 		display: flex;
 		animation: appear 0.3s ease-out forwards;
 		height: 27.5rem;
@@ -225,6 +228,7 @@
 		padding: 3rem;
 		background: var(--bg2-color);
 		border-radius: 2rem;
+		overflow: hidden;
 	}
 	h1 {
 		margin: 0 0 2rem 0;
@@ -257,6 +261,14 @@
 	#link-column-3 {
 		animation: text-appear 0.3s ease-out 0.3s forwards;
 	}
+	button {
+		background: none;
+		border: none;
+		font: inherit;
+		padding: none;
+		color: var(--text-dark-color);
+		transition: 0.2s ease;
+	}
 	a {
 		display: inline-block;
 		text-decoration: none;
@@ -278,8 +290,10 @@
 		transform: translate(-22px);
 		transition: 0.2s ease;
 	}
-	a:hover {
+	a:hover,
+	button:hover {
 		color: var(--text-color);
+		cursor: pointer;
 	}
 	a:hover .arrow {
 		transform: none;
@@ -288,7 +302,8 @@
 	a:hover .text {
 		transform: none;
 	}
-	a:active:hover {
+	a:active:hover,
+	button:active:hover {
 		transform: scale(0.9);
 	}
 	#weather-container {
@@ -308,11 +323,18 @@
 		font-size: 1.5rem;
 		vertical-align: top;
 	}
-	#version {
+	#corner {
 		position: absolute;
-		margin: 1rem;
+		padding: 1rem;
 		bottom: 0;
 		right: 0;
-		color: var(--text-dark-color);
+		opacity: 0;
+		transition: 0.2s ease;
+	}
+	#corner:hover {
+		opacity: 1;
+	}
+	#version {
+		margin: 0;
 	}
 </style>
