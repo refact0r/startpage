@@ -1,6 +1,7 @@
 <script>
-	export let name
-	export let location
+	export let config
+
+	let settings = false
 
 	let gif = Math.floor(Math.random() * 5) + 1
 
@@ -27,49 +28,6 @@
 	let weather
 	let weatherClass = 'none'
 	let temperature = 0
-	let description = ''
-	updateWeather()
-
-	function updateWeather() {
-		fetch(
-			`http://api.openweathermap.org/data/2.5/weather?q=${location}&units=imperial&appid=a5e6b61a6582627548b56770a547df5e`
-		)
-			.then((res) => res.json())
-			.then((out) => {
-				weather = out
-				console.log(weather)
-				temperature = Math.round(weather.main.temp)
-				description =
-					weather.weather[0].description[0].toUpperCase() +
-					weather.weather[0].description.substring(1)
-				if (weather.weather[0].main === 'Clear') {
-					let time = Math.floor(date / 1000)
-					console.log(time)
-					if (
-						time < weather.sys.sunrise ||
-						time > weather.sys.sunset
-					) {
-						weatherClass = 'moon'
-					} else {
-						weatherClass = 'sun'
-					}
-				} else if (
-					weather.weather[0].main === 'Rain' ||
-					weather.weather[0].main === 'Drizzle' ||
-					weather.weather[0].main === 'Thunderstorm'
-				) {
-					weatherClass = 'rain'
-				} else if (weather.weather[0].main === 'Snow') {
-					weatherClass = 'snow'
-				} else {
-					weatherClass = 'cloud'
-				}
-			})
-			.catch((err) => {
-				console.log(err)
-				weather = null
-			})
-	}
 
 	const timeInterval = setInterval(() => {
 		d = new Date()
@@ -78,6 +36,44 @@
 	const weatherInterval = setInterval(() => {
 		updateWeather()
 	}, 300000)
+
+	config.subscribe((value) => {
+		updateWeather()
+	})
+
+	async function updateWeather() {
+		const res = await fetch(
+			`http://api.openweathermap.org/data/2.5/weather?q=${$config.location}&units=${$config.units}&appid=${$config.apiKey}`
+		)
+		if (!res.ok) {
+			console.log(res)
+			console.warn(
+				'Your Openweathermap API key is probably missing or invalid.'
+			)
+			return
+		}
+		weather = await res.json()
+		console.log(weather)
+		temperature = Math.round(weather.main.temp)
+		if (weather.weather[0].main === 'Clear') {
+			let time = Math.floor(d / 1000)
+			if (time < weather.sys.sunrise || time > weather.sys.sunset) {
+				weatherClass = 'moon'
+			} else {
+				weatherClass = 'sun'
+			}
+		} else if (
+			weather.weather[0].main === 'Rain' ||
+			weather.weather[0].main === 'Drizzle' ||
+			weather.weather[0].main === 'Thunderstorm'
+		) {
+			weatherClass = 'rain'
+		} else if (weather.weather[0].main === 'Snow') {
+			weatherClass = 'snow'
+		} else {
+			weatherClass = 'cloud'
+		}
+	}
 
 	function twoDigits(n) {
 		return n < 10 ? '0' + n : n
@@ -95,85 +91,109 @@
 			/>
 			<div id="time">{hours}-{minutes}</div>
 		</div>
-		<div id="inner-box">
-			<h1 id="header-1">Good {greeting}{name ? ', ' + name : ''}.</h1>
-			<h2 id="header-2">Today is {date}.</h2>
-			<div id="links">
-				<div class="link-column" id="link-column-1">
-					<a href="https://mail.google.com">
-						<span class="arrow">></span>
-						<span class="text">gmail</span>
-					</a>
-					<br />
-					<a href="https://calendar.google.com">
-						<span class="arrow">></span>
-						<span class="text">calendar</span>
-					</a>
-					<br />
-					<a href="https://drive.google.com">
-						<span class="arrow">></span>
-						<span class="text">drive</span>
-					</a>
-					<br />
-					<a href="https://docs.google.com">
-						<span class="arrow">></span>
-						<span class="text">docs</span>
-					</a>
+		<div id="box">
+			{#if !settings}
+				<div id="heading-container">
+					<h1 id="greeting">
+						Good {greeting}{$config.name
+							? ', ' + $config.name
+							: ''}.
+					</h1>
+					<div id="weather-container" on:click={updateWeather}>
+						{#if weather}
+							<div id="temperature">{temperature}°</div>
+							<div class="weather-icon {weatherClass}" />
+						{/if}
+					</div>
 				</div>
-				<div class="link-column" id="link-column-2">
-					<a href="https://github.com">
-						<span class="arrow">></span>
-						<span class="text">github</span>
-					</a>
-					<br />
-					<a href="https://translate.google.com">
-						<span class="arrow">></span>
-						<span class="text">translate</span>
-					</a>
-					<br />
-					<a href="https://finance.yahoo.com">
-						<span class="arrow">></span>
-						<span class="text">finance</span>
-					</a>
-					<br />
-					<a href="https://monkeytype.com">
-						<span class="arrow">></span>
-						<span class="text">type</span>
-					</a>
+				<h2 id="date">Today is {date}.</h2>
+				<div id="links">
+					<div class="link-column" id="link-column-1">
+						<a href="https://mail.google.com">
+							<span class="arrow">></span>
+							<span class="text">gmail</span>
+						</a>
+						<br />
+						<a href="https://calendar.google.com">
+							<span class="arrow">></span>
+							<span class="text">calendar</span>
+						</a>
+						<br />
+						<a href="https://drive.google.com">
+							<span class="arrow">></span>
+							<span class="text">drive</span>
+						</a>
+						<br />
+						<a href="https://docs.google.com">
+							<span class="arrow">></span>
+							<span class="text">docs</span>
+						</a>
+					</div>
+					<div class="link-column" id="link-column-2">
+						<a href="https://github.com">
+							<span class="arrow">></span>
+							<span class="text">github</span>
+						</a>
+						<br />
+						<a href="https://translate.google.com">
+							<span class="arrow">></span>
+							<span class="text">translate</span>
+						</a>
+						<br />
+						<a href="https://finance.yahoo.com">
+							<span class="arrow">></span>
+							<span class="text">finance</span>
+						</a>
+						<br />
+						<a href="https://monkeytype.com">
+							<span class="arrow">></span>
+							<span class="text">type</span>
+						</a>
+					</div>
+					<div class="link-column" id="link-column-3">
+						<a href="https://youtube.com">
+							<span class="arrow">></span>
+							<span class="text">youtube</span>
+						</a>
+						<br />
+						<a href="https://twitch.tv">
+							<span class="arrow">></span>
+							<span class="text">twitch</span>
+						</a>
+						<br />
+						<a href="https://reddit.com">
+							<span class="arrow">></span>
+							<span class="text">reddit</span>
+						</a>
+						<br />
+						<a href="http://instagram.com">
+							<span class="arrow">></span>
+							<span class="text">insta</span>
+						</a>
+					</div>
 				</div>
-				<div class="link-column" id="link-column-3">
-					<a href="https://youtube.com">
-						<span class="arrow">></span>
-						<span class="text">youtube</span>
-					</a>
-					<br />
-					<a href="https://twitch.tv">
-						<span class="arrow">></span>
-						<span class="text">twitch</span>
-					</a>
-					<br />
-					<a href="https://reddit.com">
-						<span class="arrow">></span>
-						<span class="text">reddit</span>
-					</a>
-					<br />
-					<a href="http://instagram.com">
-						<span class="arrow">></span>
-						<span class="text">insta</span>
-					</a>
-				</div>
-			</div>
-			{#if weather}
-				<div id="weather-container" on:click={updateWeather}>
-					<div id="temperature">{temperature}°</div>
-					<div class="weather-icon {weatherClass}" />
-					<!-- <div id="description">{description}</div> -->
+			{:else}
+				<div id="settings">
+					<h2 id="settings-header">Settings</h2>
+					<div class="label">Name</div>
+					<input type="text" bind:value={$config.name} />
+					<div class="label">Location</div>
+					<input type="text" bind:value={$config.location} />
+					<div class="label">Openweathermap API key</div>
+					<input type="text" bind:value={$config.apiKey} />
+					<div class="label">Units</div>
+					<select bind:value={$config.units}>
+						<option value="metric">metric</option>
+						<option value="imperial">imperial</option>
+					</select>
 				</div>
 			{/if}
 		</div>
 	</div>
 	<div id="corner">
-		<button id="settings-button">settings</button>
+		<button id="settings-button" on:click={() => (settings = !settings)}>
+			settings
+		</button>
 		<a href="https://github.com/refact0r/startpage" id="version">v1.2.3</a>
 	</div>
 </main>
@@ -192,7 +212,7 @@
 		height: 27.5rem;
 	}
 	#image-container {
-		width: 27rem;
+		width: 16.5rem;
 		height: inherit;
 		position: relative;
 		margin-right: 3rem;
@@ -210,7 +230,7 @@
 		cursor: pointer;
 	}
 	#time {
-		width: 3rem;
+		width: 5rem;
 		padding: 1rem;
 		background: hsla(0, 0%, 0%, 0.4);
 		border-radius: 1rem;
@@ -223,26 +243,60 @@
 		transform: scale(0);
 		backdrop-filter: blur(3px);
 	}
-	#inner-box {
-		width: 100%;
+	#box {
 		padding: 3rem;
 		background: var(--bg2-color);
 		border-radius: 2rem;
 		overflow: hidden;
+		transition: width 0.2s ease;
+	}
+	#heading-container {
+		width: 100%;
+		display: flex;
+	}
+	#weather-container {
+		text-align: right;
+		width: 7rem;
+		margin-left: 4rem;
+		opacity: 0;
+		animation: weather-appear 0.3s ease-out 0.2s forwards;
+	}
+	#weather-container:hover {
+		cursor: pointer;
+	}
+	#temperature {
+		display: inline-block;
+		margin: 0.2rem 0 0 0;
+		font-size: 1.5rem;
+		vertical-align: top;
 	}
 	h1 {
-		margin: 0 0 2rem 0;
-		font-weight: inherit;
+		margin: 0;
+		font: inherit;
 		font-size: 2rem;
 		opacity: 0;
 		animation: text-appear 0.3s ease-out 0.2s forwards;
 	}
+	#greeting {
+		margin-bottom: 2rem;
+	}
+	#settings-header {
+		margin-bottom: 2rem;
+	}
 	h2 {
-		margin: 0 0 3.5rem 0;
-		font-weight: inherit;
+		margin: 0;
+		font: inherit;
 		font-size: 1.5rem;
 		opacity: 0;
 		animation: text-appear 0.3s ease-out 0.225s forwards;
+	}
+	#date {
+		margin-bottom: 3.5rem;
+	}
+	.label {
+		margin: 1rem 0 0.5rem 0;
+		font: inherit;
+		font-size: 1rem;
 	}
 	#links {
 		display: flex;
@@ -306,22 +360,21 @@
 	button:active:hover {
 		transform: scale(0.9);
 	}
-	#weather-container {
-		position: absolute;
-		top: 0;
-		right: 0;
-		margin: 3rem 3rem;
-		opacity: 0;
-		animation: weather-appear 0.3s ease-out 0.2s forwards;
+	select,
+	input {
+		background: var(--bg-color);
+		border: none;
+		font: inherit;
+		color: inherit;
+		padding: 0.25rem 0.5rem;
+		border-radius: 0.5rem;
+		width: 100%;
 	}
-	#weather-container:hover {
-		cursor: pointer;
+	select {
+		padding: 0.25rem;
 	}
-	#temperature {
-		display: inline-block;
-		margin: 0.2rem 0 0 0;
-		font-size: 1.5rem;
-		vertical-align: top;
+	#settings {
+		width: 30rem;
 	}
 	#corner {
 		position: absolute;
