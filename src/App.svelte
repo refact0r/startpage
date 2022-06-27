@@ -94,11 +94,14 @@
 		<div id="box">
 			{#if !settings}
 				<div id="heading-container">
-					<h1 id="greeting">
-						Good {greeting}{$config.name
-							? ', ' + $config.name
-							: ''}.
-					</h1>
+					<div id="heading">
+						<h1 id="greeting">
+							Good {greeting}{$config.name
+								? ', ' + $config.name
+								: ''}.
+						</h1>
+						<h2 id="date">Today is {date}.</h2>
+					</div>
 					<div id="weather-container" on:click={updateWeather}>
 						{#if weather}
 							<div id="temperature">{temperature}°</div>
@@ -106,70 +109,33 @@
 						{/if}
 					</div>
 				</div>
-				<h2 id="date">Today is {date}.</h2>
 				<div id="links">
 					<div class="link-column" id="link-column-1">
-						<a href="https://mail.google.com">
-							<span class="arrow">></span>
-							<span class="text">gmail</span>
-						</a>
-						<br />
-						<a href="https://calendar.google.com">
-							<span class="arrow">></span>
-							<span class="text">calendar</span>
-						</a>
-						<br />
-						<a href="https://drive.google.com">
-							<span class="arrow">></span>
-							<span class="text">drive</span>
-						</a>
-						<br />
-						<a href="https://docs.google.com">
-							<span class="arrow">></span>
-							<span class="text">docs</span>
-						</a>
+						{#each $config.links[0] as link}
+							<a href={link.url}>
+								<span class="arrow">></span>
+								<span class="text">{link.name}</span>
+							</a>
+							<br />
+						{/each}
 					</div>
 					<div class="link-column" id="link-column-2">
-						<a href="https://github.com">
-							<span class="arrow">></span>
-							<span class="text">github</span>
-						</a>
-						<br />
-						<a href="https://translate.google.com">
-							<span class="arrow">></span>
-							<span class="text">translate</span>
-						</a>
-						<br />
-						<a href="https://finance.yahoo.com">
-							<span class="arrow">></span>
-							<span class="text">finance</span>
-						</a>
-						<br />
-						<a href="https://monkeytype.com">
-							<span class="arrow">></span>
-							<span class="text">type</span>
-						</a>
+						{#each $config.links[1] as link}
+							<a href={link.url}>
+								<span class="arrow">></span>
+								<span class="text">{link.name}</span>
+							</a>
+							<br />
+						{/each}
 					</div>
 					<div class="link-column" id="link-column-3">
-						<a href="https://youtube.com">
-							<span class="arrow">></span>
-							<span class="text">youtube</span>
-						</a>
-						<br />
-						<a href="https://twitch.tv">
-							<span class="arrow">></span>
-							<span class="text">twitch</span>
-						</a>
-						<br />
-						<a href="https://reddit.com">
-							<span class="arrow">></span>
-							<span class="text">reddit</span>
-						</a>
-						<br />
-						<a href="http://instagram.com">
-							<span class="arrow">></span>
-							<span class="text">insta</span>
-						</a>
+						{#each $config.links[2] as link}
+							<a href={link.url}>
+								<span class="arrow">></span>
+								<span class="text">{link.name}</span>
+							</a>
+							<br />
+						{/each}
 					</div>
 				</div>
 			{:else}
@@ -257,6 +223,7 @@
 	#weather-container {
 		text-align: right;
 		width: 7rem;
+		height: min-content;
 		margin-left: 4rem;
 		opacity: 0;
 		animation: weather-appear 0.3s ease-out 0.2s forwards;
@@ -274,27 +241,27 @@
 		margin: 0;
 		font: inherit;
 		font-size: 2rem;
-		opacity: 0;
-		animation: text-appear 0.3s ease-out 0.2s forwards;
 	}
 	#greeting {
 		margin-bottom: 2rem;
+		opacity: 0;
+		animation: text-appear 0.3s ease-out 0.2s forwards;
 	}
 	#settings-header {
-		margin-bottom: 2rem;
+		margin-bottom: 1.5rem;
 	}
 	h2 {
 		margin: 0;
 		font: inherit;
 		font-size: 1.5rem;
-		opacity: 0;
-		animation: text-appear 0.3s ease-out 0.225s forwards;
 	}
 	#date {
 		margin-bottom: 3.5rem;
+		opacity: 0;
+		animation: text-appear 0.3s ease-out 0.225s forwards;
 	}
 	.label {
-		margin: 1rem 0 0.5rem 0;
+		margin: 1rem 0 0.25rem 0;
 		font: inherit;
 		font-size: 1rem;
 	}
@@ -366,15 +333,15 @@
 		border: none;
 		font: inherit;
 		color: inherit;
-		padding: 0.25rem 0.5rem;
+		padding: 0.5rem;
 		border-radius: 0.5rem;
 		width: 100%;
 	}
 	select {
-		padding: 0.25rem;
+		padding: 0.5rem;
 	}
 	#settings {
-		width: 30rem;
+		width: 25rem;
 	}
 	#corner {
 		position: absolute;
