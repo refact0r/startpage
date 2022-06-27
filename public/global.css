@@ -9,6 +9,7 @@
 	--cloud-color: hsl(200, 30%, 80%);
 	--rain-color: hsl(190, 80%, 60%);
 	--snow-color: hsl(0, 0%, 90%);
+	box-sizing: border-box;
 }
 
 body {
