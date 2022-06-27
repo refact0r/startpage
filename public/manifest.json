@@ -1,9 +1,14 @@
 {
 	"manifest_version": 2,
-	"name": "Startpage",
-	"version": "1.2.3",
+	"name": "startpage",
+	"version": "1.2.4",
 	"description": "Custom new tab startpage",
 	"chrome_url_overrides": {
 		"newtab": "index.html"
+	},
+	"browser_specific_settings": {
+		"gecko": {
+			"id": "{1b021246-cf15-4ebc-bfd9-52fe280c7870}"
+		}
 	}
 }

@@ -1,5 +1,5 @@
 /node_modules/
 /public/build/
-/web-ext-artifacts/
+/public/web-ext-artifacts/
 
 .DS_Store
