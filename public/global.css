@@ -1,9 +1,9 @@
 * {
-	--bg-color: hsl(210, 20%, 10%);
-	--bg2-color: hsl(210, 20%, 13%);
-	--text-light-color: hsl(210, 20%, 80%);
-	--text-color: hsl(210, 20%, 60%);
-	--text-dark-color: hsl(210, 20%, 45%);
+	--bg-color: #151a1f;
+	--bg2-color: #1b2127;
+	--text-light-color: #8599ad;
+	--text-color: #8599ad;
+	--text-dark-color: #52667a;
 	--sun-color: hsl(40, 70%, 60%);
 	--moon-color: hsl(0, 0%, 80%);
 	--cloud-color: hsl(200, 30%, 80%);
