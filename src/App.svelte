@@ -144,7 +144,7 @@
 		<button id="settings-button" on:click={() => (settings = !settings)}>
 			settings
 		</button>
-		<a href="https://github.com/refact0r/startpage" id="version">v1.2.5</a>
+		<a href="https://github.com/refact0r/startpage" id="version">v1.2.6</a>
 	</div>
 </main>
 
