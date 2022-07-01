@@ -110,33 +110,17 @@
 					</div>
 				</div>
 				<div id="links">
-					<div class="link-column" id="link-column-1">
-						{#each $config.links[0] as link}
-							<a href={link.url}>
-								<span class="arrow">></span>
-								<span class="text">{link.name}</span>
-							</a>
-							<br />
-						{/each}
-					</div>
-					<div class="link-column" id="link-column-2">
-						{#each $config.links[1] as link}
-							<a href={link.url}>
-								<span class="arrow">></span>
-								<span class="text">{link.name}</span>
-							</a>
-							<br />
-						{/each}
-					</div>
-					<div class="link-column" id="link-column-3">
-						{#each $config.links[2] as link}
-							<a href={link.url}>
-								<span class="arrow">></span>
-								<span class="text">{link.name}</span>
-							</a>
-							<br />
-						{/each}
-					</div>
+					{#each $config.links as column}
+						<div class="link-column">
+							{#each column as link}
+								<a href={link.url}>
+									<span class="arrow">></span>
+									<span class="text">{link.name}</span>
+								</a>
+								<br />
+							{/each}
+						</div>
+					{/each}
 				</div>
 			{:else}
 				<div id="settings">
@@ -175,10 +159,9 @@
 	#content {
 		display: flex;
 		animation: appear 0.3s ease-out forwards;
-		height: 27.5rem;
 	}
 	#image-container {
-		width: 16.5rem;
+		width: 16rem;
 		height: inherit;
 		position: relative;
 		margin-right: 3rem;
@@ -191,6 +174,7 @@
 	#image {
 		position: absolute;
 		height: inherit;
+		max-height: 100%;
 	}
 	#image:hover {
 		cursor: pointer;
@@ -221,6 +205,9 @@
 		display: flex;
 	}
 	#weather-container {
+		position: absolute;
+		top: 3rem;
+		right: 3rem;
 		text-align: right;
 		width: 7rem;
 		height: min-content;
@@ -244,6 +231,7 @@
 	}
 	#greeting {
 		margin-bottom: 2rem;
+		margin-right: 12rem;
 		opacity: 0;
 		animation: text-appear 0.3s ease-out 0.2s forwards;
 	}
@@ -269,18 +257,11 @@
 		display: flex;
 		justify-content: space-between;
 		margin: 0;
+		gap: 3rem;
 	}
 	.link-column {
 		opacity: 0;
-	}
-	#link-column-1 {
 		animation: text-appear 0.3s ease-out 0.25s forwards;
-	}
-	#link-column-2 {
-		animation: text-appear 0.3s ease-out 0.275s forwards;
-	}
-	#link-column-3 {
-		animation: text-appear 0.3s ease-out 0.3s forwards;
 	}
 	button {
 		background: none;
@@ -297,7 +278,7 @@
 		transition: 0.2s ease;
 		margin-bottom: 2rem;
 	}
-	a:last-child {
+	a:last-of-type {
 		margin-bottom: 0;
 	}
 	.arrow {
