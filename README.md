@@ -10,6 +10,8 @@ Firefox theme: [midnight-fox](https://github.com/refact0r/midnight-fox)
 
 ## Installation
 
+Make sure to install the [Cascadia Code](https://github.com/microsoft/cascadia-code) font on your computer.
+
 ### Firefox
 
 1. Go to the [releases](https://github.com/refact0r/startpage/releases) and download the .xpi file from the latest release.
