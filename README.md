@@ -4,7 +4,9 @@ A clean startpage made with Svelte.
 
 Try it out here: https://refact0r-startpage.netlify.app/
 
-Firefox theme: [midnight-fox](https://github.com/refact0r/midnight-fox)
+Check out my newer startpage: https://github.com/refact0r/alpine
+
+Firefox theme: https://github.com/refact0r/sidefox
 
 ![image](https://user-images.githubusercontent.com/34758569/175662486-e08443d9-fda8-4898-ad12-dc6e0c1b0429.png)
 
