@@ -2,8 +2,6 @@
 
 A clean startpage made with Svelte.
 
-Try it out here: https://refact0r-startpage.netlify.app/
-
 Check out my newer startpage: https://github.com/refact0r/alpine
 
 Firefox theme: https://github.com/refact0r/sidefox
