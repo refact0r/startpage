@@ -1,4 +1,14 @@
-/node_modules/
-/public/web-ext-artifacts/
+# Created by https://www.toptal.com/developers/gitignore/api/svelte
+# Edit at https://www.toptal.com/developers/gitignore?templates=svelte
 
-.DS_Store
+### Svelte ###
+# gitignore template for the SvelteKit, frontend web component framework
+# website: https://kit.svelte.dev/
+
+.svelte-kit/
+package
+manifest.json
+node-modules
+
+# End of https://www.toptal.com/developers/gitignore/api/svelte
+
